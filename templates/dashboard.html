@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<nav>
+    <div class="logo">🛡 CyberShield AI</div>
+    <div>
+        <a href="/scan" class="nav-link">Scanner</a>
+        <a href="/" class="nav-link">Home</a>
+    </div>
+</nav>
+
+<div class="scanner-box">
+    <h1 class="glow-text">📊 Scan History</h1>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Input</th>
+            <th>Result</th>
+        </tr>
+        {% for row in logs %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1][:30] }}...</td>
+            <td>{{ row[2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>

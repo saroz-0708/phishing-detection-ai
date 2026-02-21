@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI phishing detection 🛡️</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body id="pageBody">
+
+<canvas id="particles"></canvas>
+
+<nav>
+    <div class="logo">🛡 CyberShield AI</div>
+    <div>
+        <a href="/" class="nav-link">Home</a>
+        <a href="/dashboard" class="nav-link">Dashboard</a>
+    </div>
+</nav>
+
+<div class="scanner-box">
+    <h1 class="glow-text">🔍 AI Threat Scanner</h1>
+    <p>Paste website URL or email content</p>
+
+    <form method="POST" onsubmit="load()">
+        <input type="text" name="text" placeholder="https://example.com or email text" required>
+        <button class="scan-btn">🚨 Start Scan</button>
+    </form>
+
+    <div id="load" class="loading">⏳ AI analyzing threat patterns...</div>
+
+    {% if prediction %}
+    <div class="result-box {% if 'Phishing' in prediction %}danger{% else %}safe{% endif %}">
+        🧠 Result: <b>{{ prediction }}</b>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+const c=document.getElementById("particles"),x=c.getContext("2d");
+c.width=innerWidth;c.height=innerHeight;
+let ps=[];
+for(let i=0;i<70;i++)ps.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2+1,dx:(Math.random()-.5)*.5,dy:(Math.random()-.5)*.5});
+function an(){
+    x.clearRect(0,0,c.width,c.height);x.fillStyle="#00f2fe";
+    ps.forEach(p=>{x.beginPath();x.arc(p.x,p.y,p.r,0,6.28);x.fill();p.x+=p.dx;p.y+=p.dy;
+    if(p.x<0||p.x>c.width)p.dx*=-1;if(p.y<0||p.y>c.height)p.dy*=-1});
+    requestAnimationFrame(an);
+}
+an();
+function load(){document.getElementById("load").style.display="block";}
+</script>
+
+<script>
+const prediction = "{{ prediction }}";
+
+if (prediction.includes("Legitimate ✅")) {
+    document.body.classList.add("safe-bg");
+}
+else if (prediction.includes("Phishing ⚠️")) {
+    document.body.classList.add("danger-bg");
+}
+</script>
+
+</body>
+</html>

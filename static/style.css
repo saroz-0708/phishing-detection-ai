@@ -1,0 +1,84 @@
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{background:#0f0c29;color:white;overflow-x:hidden}
+canvas{position:fixed;top:0;left:0;z-index:-2}
+
+nav{display:flex;justify-content:space-between;padding:20px 60px}
+.logo{font-size:22px;font-weight:bold}
+.nav-link{margin-left:20px;color:white;text-decoration:none}
+.nav-link:hover{color:#00f2fe}
+
+.hero{height:80vh;display:flex;align-items:center;justify-content:center;text-align:center}
+.hero-content{max-width:800px;animation:fade 1.5s}
+.glow-text{text-shadow:0 0 10px #00f2fe,0 0 30px #00f2fe}
+.typing{color:#00f2fe}
+
+.buttons{margin-top:30px}
+.btn-primary,.btn-secondary{padding:15px 35px;border-radius:30px;text-decoration:none;font-weight:bold}
+.btn-primary{background:linear-gradient(90deg,#00f2fe,#4facfe);color:white}
+.btn-primary:hover{transform:scale(1.1);box-shadow:0 0 20px #00f2fe}
+.btn-secondary{border:2px solid #00f2fe;color:#00f2fe}
+.btn-secondary:hover{background:#00f2fe;color:black}
+
+.scanner-box{
+    max-width:650px;margin:80px auto;padding:40px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(15px);
+    border-radius:20px;
+    box-shadow:0 0 30px rgba(0,242,254,.3)
+}
+input{width:100%;padding:15px;border:none;border-radius:12px;margin:15px 0}
+.scan-btn{width:100%;padding:15px;border:none;border-radius:30px;
+    background:linear-gradient(90deg,#00f2fe,#4facfe);
+    color:white;font-size:18px;cursor:pointer}
+.scan-btn:hover{transform:scale(1.08)}
+
+.loading{text-align:center;margin-top:15px;display:none;color:#00f2fe}
+.result-box{margin-top:20px;padding:15px;border-radius:15px;text-align:center}
+.safe{background:rgba(0,255,0,.15)}
+.danger{background:rgba(255,0,0,.15)}
+
+table{width:100%;margin-top:20px;border-collapse:collapse}
+th,td{padding:12px;text-align:center}
+tr:hover{background:rgba(255,255,255,.1)}
+
+@keyframes fade{from{opacity:0;transform:translateY(30px)}to{opacity:1}} 
+
+/* === DYNAMIC RESULT BACKGROUNDS === */
+
+/* SAFE (LEGITIMATE) */
+.safe-bg::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center,
+        rgba(0, 255, 150, 0.35),
+        rgba(0, 255, 150, 0.05),
+        transparent 70%);
+    z-index: -1;
+    animation: pulseSafe 3s infinite;
+}
+
+@keyframes pulseSafe {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+/* DANGER (PHISHING) */
+.danger-bg::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center,
+        rgba(255, 0, 80, 0.35),
+        rgba(255, 0, 80, 0.05),
+        transparent 70%);
+    z-index: -1;
+    animation: pulseDanger 2s infinite;
+}
+
+@keyframes pulseDanger {
+    0% { opacity: 0.7; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}

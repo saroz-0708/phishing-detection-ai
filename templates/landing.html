@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CyberShield AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<nav>
+    <div class="logo">🛡 CyberShield AI</div>
+    <div>
+        <a href="/scan" class="nav-link">Scanner</a>
+        <a href="/dashboard" class="nav-link">Dashboard</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <h1 class="glow-text">
+            AI Protection Against
+            <span class="typing"></span>
+        </h1>
+
+        <p>
+            Detect phishing websites and malicious emails using advanced
+            Artificial Intelligence technology.
+        </p>
+
+        <div class="buttons">
+            <a href="/scan" class="btn-primary">🚀 Start Scanning</a>
+            <a href="/dashboard" class="btn-secondary">📊 Analytics</a>
+        </div>
+    </div>
+</section>
+
+<script>
+const words = ["Phishing Attacks", "Fake Websites", "Malicious Emails"];
+let i=0,j=0,isDel=false;
+
+function typing(){
+    let w=words[i];
+    document.querySelector(".typing").textContent =
+        isDel ? w.substring(0,j--) : w.substring(0,j++);
+    if(!isDel && j===w.length+1){isDel=true;setTimeout(typing,1000);return;}
+    if(isDel && j===0){isDel=false;i=(i+1)%words.length;}
+    setTimeout(typing,isDel?60:120);
+}
+typing();
+
+const canvas=document.getElementById("particles"),ctx=canvas.getContext("2d");
+canvas.width=innerWidth;canvas.height=innerHeight;
+let p=[];
+for(let i=0;i<90;i++)p.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1,dx:(Math.random()-.5)*.6,dy:(Math.random()-.5)*.6});
+function anim(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="#00f2fe";
+    p.forEach(a=>{
+        ctx.beginPath();ctx.arc(a.x,a.y,a.r,0,Math.PI*2);ctx.fill();
+        a.x+=a.dx;a.y+=a.dy;
+        if(a.x<0||a.x>canvas.width)a.dx*=-1;
+        if(a.y<0||a.y>canvas.height)a.dy*=-1;
+    });
+    requestAnimationFrame(anim);
+}
+anim();
+onresize=()=>{canvas.width=innerWidth;canvas.height=innerHeight;}
+</script>
+
+</body>
+</html>
